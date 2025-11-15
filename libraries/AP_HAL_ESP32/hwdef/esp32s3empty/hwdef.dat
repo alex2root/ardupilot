@@ -1,4 +1,5 @@
 # ArduPilot ESP32 board definition for esp32s3empty
+define HAL_ESP32_BOARD_NAME "esp32s3empty"
 
 # RMT pin for protocols like DShot, SBUS, etc.
 define HAL_ESP32_RMT_RX_PIN_NUMBER GPIO_NUM_14
