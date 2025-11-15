@@ -1,82 +1,50 @@
-/*
- * This file is free software: you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This file is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+# ArduPilot ESP32 board definition for esp32s3empty
 
-/*
- * This board that does not contain any sensors (but pins are active), it is a great help for a novice user,
- * by flashing an empty board, you can connect via Mavlink (Mission Planner - MP) and gradually add sensors.
- * If you had some sensor configured and it doesn't work then the MP connection does not work and then you may not know what to do next.
-*/
+# RMT pin for protocols like DShot
+RMT_RX_PIN GPIO_NUM_14
 
-#pragma once
+# No sensors
+define HAL_INS_DEFAULT HAL_INS_NONE
+define HAL_BARO_DEFAULT HAL_BARO_NONE
+define AP_COMPASS_ENABLED 0
 
-#define HAL_ESP32_BOARD_NAME "esp32s3empty"
+# I2C bus list
+#             Port       SDA         SCL
+ESP32_I2CBUS  I2C_NUM_0  GPIO_NUM_5  GPIO_NUM_6
 
-#define TRUE  1
-#define FALSE 0
+# RCIN for SBUS
+RCIN_PIN GPIO_NUM_44
 
-// RMT pin for protocols like DShot
-#define HAL_ESP32_RMT_RX_PIN_NUMBER GPIO_NUM_14
+# RCOUT for motors and servos
+ESP32_RCOUT GPIO_NUM_1
+ESP32_RCOUT GPIO_NUM_2
+ESP32_RCOUT GPIO_NUM_3
+ESP32_RCOUT GPIO_NUM_4
+ESP32_RCOUT GPIO_NUM_7
+ESP32_RCOUT GPIO_NUM_8
 
-// No sensors
-#define HAL_INS_DEFAULT HAL_INS_NONE
-#define INS_MAX_INSTANCES 3  // only here for binary identicality
+# WIFI settings
+# 2 for UDP, 1 for TCP
+define HAL_ESP32_WIFI 2
+define WIFI_SSID "ardupilot123"
+define WIFI_PWD "ardupilot123"
 
-#define HAL_BARO_ALLOW_INIT_NO_BARO 1
+# HARDWARE UARTS
+#             PORT        RXPIN        TXPIN
+ESP32_SERIAL  UART_NUM_0  GPIO_NUM_44  GPIO_NUM_43
+ESP32_SERIAL  UART_NUM_1  GPIO_NUM_17  GPIO_NUM_18
 
-#define AP_COMPASS_ENABLE_DEFAULT 0
-#define ALLOW_ARM_NO_COMPASS
-#define AP_AIRSPEED_ENABLED 0
+# ADC disabled
+define HAL_USE_ADC 0
 
-// I2C bus list
-#define HAL_ESP32_I2C_BUSES \
-    {.port=I2C_NUM_0, .sda=GPIO_NUM_5, .scl=GPIO_NUM_6, .speed=400*KHZ, .internal=true}
+# Logging disabled
+define HAL_LOGGING_ENABLED 0
 
-// RCIN for SBUS
-#define HAL_ESP32_RCIN GPIO_NUM_44
+# Other disabled features to save space
+define AP_FILESYSTEM_ESP32_ENABLED 0
+define AP_SCRIPTING_ENABLED 0
+define HAL_USE_EMPTY_STORAGE 1
 
-// RCOUT for motors and servos
-#define HAL_ESP32_RCOUT {GPIO_NUM_1, GPIO_NUM_2, GPIO_NUM_3, GPIO_NUM_4, GPIO_NUM_7, GPIO_NUM_8}
-
-// WIFI
-// 2 use udp, 1 use tcp...  for udp,client needs to connect as UDPCL in missionplanner etc to 192.168.4.1 port 14550
-#define HAL_ESP32_WIFI 2
-#define WIFI_SSID "ardupilot123"
-#define WIFI_PWD "ardupilot123"
-
-// HARDWARE UARTS
-// PORT        RXPIN        TXPIN
-#define HAL_ESP32_UART_DEVICES \
-    {.port=UART_NUM_0, .rx=GPIO_NUM_44, .tx=GPIO_NUM_43},\
-    {.port=UART_NUM_1, .rx=GPIO_NUM_17, .tx=GPIO_NUM_18}
-
-// ADC disabled
-#define HAL_DISABLE_ADC_DRIVER 1
-#define HAL_USE_ADC 0
-
-// Logging disabled
-#define HAL_LOGGING_FILESYSTEM_ENABLED 0
-#define HAL_LOGGING_DATAFLASH_ENABLED 0
-#define HAL_LOGGING_MAVLINK_ENABLED 0
-#define HAL_LOGGING_BACKENDS_DEFAULT 1
-
-#define AP_RCPROTOCOL_ENABLED 0
-
-#define AP_FILESYSTEM_ESP32_ENABLED 0
-#define AP_SCRIPTING_ENABLED 0
-#define HAL_USE_EMPTY_STORAGE 1
-
-// disable all frames for sim on hw except quad to save DRAM .bss
-#define AP_MOTORS_FRAME_DEFAULT_ENABLED 0
-#define AP_MOTORS_FRAME_QUAD_ENABLED 1
+# Disable all frames except quad to save DRAM
+define AP_MOTORS_FRAME_DEFAULT_ENABLED 0
+define AP_MOTORS_FRAME_QUAD_ENABLED 1
