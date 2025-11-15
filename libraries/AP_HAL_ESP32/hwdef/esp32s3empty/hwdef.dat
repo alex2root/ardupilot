@@ -9,8 +9,8 @@ define HAL_BARO_DEFAULT HAL_BARO_NONE
 define AP_COMPASS_ENABLED 0
 
 # I2C bus list
-#             Port       SDA         SCL
-ESP32_I2CBUS  I2C_NUM_0  GPIO_NUM_5  GPIO_NUM_6
+#             Port       SDA         SCL         SPEED    INTERNAL SOFT
+ESP32_I2CBUS  I2C_NUM_0  GPIO_NUM_5  GPIO_NUM_6  400*KHZ  true     true
 
 # RCIN for SBUS
 RCIN_PIN GPIO_NUM_44
