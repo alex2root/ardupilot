@@ -1,7 +1,7 @@
 # ArduPilot ESP32 board definition for esp32s3empty
 
-# RMT pin for protocols like DShot
-RMT_RX_PIN GPIO_NUM_14
+# RMT pin for protocols like DShot, SBUS, etc.
+define HAL_ESP32_RMT_RX_PIN_NUMBER GPIO_NUM_14
 
 # No sensors
 define HAL_INS_DEFAULT HAL_INS_NONE
@@ -12,7 +12,7 @@ define AP_COMPASS_ENABLED 0
 #             Port       SDA         SCL         SPEED    INTERNAL SOFT
 ESP32_I2CBUS  I2C_NUM_0  GPIO_NUM_5  GPIO_NUM_6  400*KHZ  true     true
 
-# RCIN for SBUS
+# RCIN for SBUS (this pin is used by the RMT driver defined above)
 RCIN_PIN GPIO_NUM_44
 
 # RCOUT for motors and servos
